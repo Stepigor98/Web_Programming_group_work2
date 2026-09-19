@@ -1,0 +1,6 @@
+{
+  "name": "Hamlet: To Be, or Not to Be",
+  "description": "An authentic literary reading and anthology experience for William Shakespeare's Hamlet, Act III, Scene I soliloquy.",
+  "requestFramePermissions": [],
+  "majorCapabilities": ["MAJOR_CAPABILITY_SERVER_SIDE_GEMINI_API"]
+}

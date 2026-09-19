@@ -1,0 +1,34 @@
+@import "tailwindcss";
+
+@layer utilities {
+  .font-serif-folio {
+    font-family: 'EB Garamond', Garamond, Georgia, serif;
+  }
+  .font-editorial {
+    font-family: 'Newsreader', 'Times New Roman', Georgia, serif;
+  }
+  .font-display {
+    font-family: 'Cinzel', 'Trajan Pro', Georgia, serif;
+  }
+  .font-sans-ui {
+    font-family: 'Plus Jakarta Sans', system-ui, -apple-system, sans-serif;
+  }
+}
+
+@media print {
+  body {
+    background: #ffffff !important;
+    color: #111111 !important;
+  }
+  .no-print {
+    display: none !important;
+  }
+  .print-container {
+    padding: 0 !important;
+    margin: 0 !important;
+    max-width: 100% !important;
+    box-shadow: none !important;
+    border: none !important;
+    background: transparent !important;
+  }
+}
