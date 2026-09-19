@@ -10,6 +10,8 @@ import {
   BookMarked,
   Check,
   ExternalLink,
+  Facebook,
+  Twitter,
 } from 'lucide-react';
 import { ReadingPreferences } from '../types';
 
@@ -43,15 +45,25 @@ export const PoemActionsBar: React.FC<PoemActionsBarProps> = ({
 
   const isNocturne = preferences.theme === 'nocturne';
   const isParchment = preferences.theme === 'parchment';
+  const isIridescent = preferences.theme === 'iridescent';
+  const isCyber = preferences.theme === 'cyber-aurora';
 
   const btnBase = `inline-flex items-center gap-2 px-3 py-1.5 rounded-lg text-xs font-medium transition-all duration-150 focus:outline-none focus-visible:ring-2`;
-  const btnSecondary = isNocturne
+  const btnSecondary = isIridescent
+    ? 'bg-white/80 hover:bg-white text-zinc-900 border border-purple-300/70 shadow-sm hover:shadow-purple-500/20 focus-visible:ring-purple-400'
+    : isCyber
+    ? 'bg-zinc-800/80 hover:bg-zinc-700 text-cyan-300 border border-cyan-500/40 focus-visible:ring-cyan-400'
+    : isNocturne
     ? 'bg-zinc-800/80 hover:bg-zinc-700 text-zinc-200 border border-zinc-700/60 focus-visible:ring-amber-400'
     : isParchment
     ? 'bg-[#f4efe4] hover:bg-[#e9e1d2] text-stone-800 border border-stone-300 focus-visible:ring-amber-700'
     : 'bg-zinc-100 hover:bg-zinc-200 text-zinc-800 border border-zinc-200 focus-visible:ring-zinc-400';
 
-  const btnPrimary = isNocturne
+  const btnPrimary = isIridescent
+    ? 'bg-gradient-to-r from-pink-500 via-purple-600 to-cyan-500 text-white font-semibold shadow-md shadow-purple-500/30 hover:opacity-95'
+    : isCyber
+    ? 'bg-gradient-to-r from-cyan-500 to-emerald-400 text-zinc-950 font-bold shadow-cyan-500/30'
+    : isNocturne
     ? 'bg-amber-500 hover:bg-amber-400 text-zinc-950 font-semibold'
     : isParchment
     ? 'bg-stone-900 hover:bg-stone-800 text-amber-50 font-medium'
@@ -61,7 +73,11 @@ export const PoemActionsBar: React.FC<PoemActionsBarProps> = ({
     <div className="no-print mb-8 sticky top-3 z-30">
       <div
         className={`p-2 sm:p-2.5 rounded-xl backdrop-blur-md border shadow-sm transition-colors duration-200 flex flex-wrap items-center justify-between gap-2 ${
-          isNocturne
+          isIridescent
+            ? 'bg-white/85 dark:bg-zinc-900/85 border-purple-300/50 shadow-purple-500/20'
+            : isCyber
+            ? 'bg-zinc-900/90 border-cyan-500/40 shadow-cyan-500/20'
+            : isNocturne
             ? 'bg-zinc-900/90 border-zinc-800 shadow-black/40'
             : isParchment
             ? 'bg-[#faf6ee]/95 border-stone-300 shadow-stone-400/10'
@@ -91,78 +107,36 @@ export const PoemActionsBar: React.FC<PoemActionsBarProps> = ({
             )}
           </button>
 
-          {/* Social Share Menu (Facebook, Twitter, Tumblr) */}
-          <div className="relative">
-            <button
-              id="action-share"
-              onClick={() => setShowShareMenu(!showShareMenu)}
-              className={`${btnBase} ${btnSecondary}`}
-              title="Share on social media"
-            >
-              <Share2 className="w-3.5 h-3.5" />
-              <span>Share</span>
-            </button>
+          {/* Individual Vibrant Blinking Social Share Buttons */}
+          <button
+            id="share-facebook-btn"
+            onClick={() => onOpenShare('facebook')}
+            className="px-2.5 sm:px-3 py-1.5 rounded-lg text-xs font-semibold flex items-center gap-1.5 text-white bg-blue-600/90 hover:bg-blue-500 border border-blue-400 animate-neon-blue-blink shadow-lg shadow-blue-500/30 transition-all hover:scale-105 active:scale-95"
+            title="Share on Facebook"
+          >
+            <Facebook className="w-3.5 h-3.5 fill-current" />
+            <span className="whitespace-nowrap">Share on Facebook</span>
+          </button>
 
-            {showShareMenu && (
-              <div
-                className={`absolute left-0 mt-2 w-48 rounded-xl border p-1.5 shadow-xl z-50 text-xs font-sans-ui ${
-                  isNocturne
-                    ? 'bg-zinc-900 border-zinc-700 text-zinc-100 shadow-black/80'
-                    : isParchment
-                    ? 'bg-[#fcf9f2] border-stone-300 text-stone-900 shadow-stone-300/40'
-                    : 'bg-white border-zinc-200 text-zinc-900 shadow-zinc-300/40'
-                }`}
-              >
-                <div className="px-2 py-1 text-[10px] font-semibold uppercase tracking-wider opacity-60">
-                  Share this Soliloquy
-                </div>
-                <button
-                  id="share-facebook-btn"
-                  onClick={() => {
-                    setShowShareMenu(false);
-                    onOpenShare('facebook');
-                  }}
-                  className="w-full flex items-center justify-between px-2.5 py-1.5 rounded-lg text-left hover:bg-black/5 dark:hover:bg-white/10 transition-colors"
-                >
-                  <span className="font-medium">Share on Facebook</span>
-                  <ExternalLink className="w-3 h-3 opacity-60" />
-                </button>
-                <button
-                  id="share-twitter-btn"
-                  onClick={() => {
-                    setShowShareMenu(false);
-                    onOpenShare('twitter');
-                  }}
-                  className="w-full flex items-center justify-between px-2.5 py-1.5 rounded-lg text-left hover:bg-black/5 dark:hover:bg-white/10 transition-colors"
-                >
-                  <span className="font-medium">Share on Twitter (X)</span>
-                  <ExternalLink className="w-3 h-3 opacity-60" />
-                </button>
-                <button
-                  id="share-tumblr-btn"
-                  onClick={() => {
-                    setShowShareMenu(false);
-                    onOpenShare('tumblr');
-                  }}
-                  className="w-full flex items-center justify-between px-2.5 py-1.5 rounded-lg text-left hover:bg-black/5 dark:hover:bg-white/10 transition-colors"
-                >
-                  <span className="font-medium">Share on Tumblr</span>
-                  <ExternalLink className="w-3 h-3 opacity-60" />
-                </button>
-                <div className="my-1 border-t border-black/5 dark:border-white/10" />
-                <button
-                  id="share-all-btn"
-                  onClick={() => {
-                    setShowShareMenu(false);
-                    onOpenShare();
-                  }}
-                  className="w-full text-left px-2.5 py-1.5 rounded-lg text-[11px] opacity-80 hover:opacity-100 hover:bg-black/5 dark:hover:bg-white/10"
-                >
-                  More share options & link...
-                </button>
-              </div>
-            )}
-          </div>
+          <button
+            id="share-twitter-btn"
+            onClick={() => onOpenShare('twitter')}
+            className="px-2.5 sm:px-3 py-1.5 rounded-lg text-xs font-semibold flex items-center gap-1.5 text-cyan-300 bg-cyan-950/80 hover:bg-cyan-900 border border-cyan-400 animate-neon-cyan-blink shadow-lg shadow-cyan-500/30 transition-all hover:scale-105 active:scale-95"
+            title="Share on Twitter (X)"
+          >
+            <Twitter className="w-3.5 h-3.5 fill-current" />
+            <span className="whitespace-nowrap">Share on Twitter(X)</span>
+          </button>
+
+          <button
+            id="share-tumblr-btn"
+            onClick={() => onOpenShare('tumblr')}
+            className="px-2.5 sm:px-3 py-1.5 rounded-lg text-xs font-semibold flex items-center gap-1.5 text-pink-200 bg-pink-950/80 hover:bg-pink-900 border border-pink-400 animate-neon-pink-blink shadow-lg shadow-pink-500/30 transition-all hover:scale-105 active:scale-95"
+            title="Share on Tumblr"
+          >
+            <Share2 className="w-3.5 h-3.5" />
+            <span className="whitespace-nowrap">Share on Tumblr</span>
+          </button>
 
           {/* View Print Mode */}
           <button
@@ -248,6 +222,28 @@ export const PoemActionsBar: React.FC<PoemActionsBarProps> = ({
                 {/* Theme Selection */}
                 <div className="mb-3">
                   <span className="text-[11px] block font-medium opacity-70 mb-1.5">Atmosphere</span>
+                  <div className="grid grid-cols-2 gap-1.5 mb-1">
+                    <button
+                      onClick={() => onUpdatePreferences({ theme: 'iridescent' })}
+                      className={`py-1 px-1.5 rounded text-[11px] font-medium border text-center transition-all ${
+                        preferences.theme === 'iridescent'
+                          ? 'border-purple-500 bg-gradient-to-r from-pink-500/20 via-purple-500/20 to-cyan-500/20 text-purple-700 dark:text-purple-300 font-bold'
+                          : 'border-transparent opacity-70 hover:opacity-100'
+                      }`}
+                    >
+                      ✨ Iridescent
+                    </button>
+                    <button
+                      onClick={() => onUpdatePreferences({ theme: 'cyber-aurora' })}
+                      className={`py-1 px-1.5 rounded text-[11px] font-medium border text-center transition-all ${
+                        preferences.theme === 'cyber-aurora'
+                          ? 'border-cyan-500 bg-cyan-500/20 text-cyan-300 font-bold'
+                          : 'border-transparent opacity-70 hover:opacity-100'
+                      }`}
+                    >
+                      ⚡ Cyber-Aurora
+                    </button>
+                  </div>
                   <div className="grid grid-cols-3 gap-1">
                     {(['parchment', 'light', 'nocturne'] as const).map((thm) => (
                       <button

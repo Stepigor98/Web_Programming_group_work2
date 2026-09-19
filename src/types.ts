@@ -20,7 +20,7 @@ export interface Anthology {
   themeColor?: string;
 }
 
-export type ReadingTheme = 'parchment' | 'light' | 'nocturne';
+export type ReadingTheme = 'iridescent' | 'cyber-aurora' | 'parchment' | 'light' | 'nocturne';
 export type FontStyleChoice = 'garamond' | 'newsreader' | 'sans';
 export type FontSizeChoice = 'normal' | 'large' | 'scholarly';
 

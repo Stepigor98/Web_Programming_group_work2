@@ -23,6 +23,8 @@ export const PoemReader: React.FC<PoemReaderProps> = ({
 
   const isNocturne = preferences.theme === 'nocturne';
   const isParchment = preferences.theme === 'parchment';
+  const isIridescent = preferences.theme === 'iridescent';
+  const isCyber = preferences.theme === 'cyber-aurora';
 
   // Font family class
   const fontClass =
@@ -83,7 +85,13 @@ export const PoemReader: React.FC<PoemReaderProps> = ({
                 }}
                 className={`cursor-pointer transition-all duration-150 inline-block px-0.5 rounded ${
                   isCurrent
-                    ? 'bg-amber-400/30 text-amber-900 dark:text-amber-200 underline decoration-amber-500 decoration-2 font-medium'
+                    ? isIridescent
+                      ? 'bg-gradient-to-r from-pink-500/30 to-purple-500/30 text-purple-900 dark:text-purple-200 underline decoration-purple-500 decoration-2 font-semibold'
+                      : 'bg-amber-400/30 text-amber-900 dark:text-amber-200 underline decoration-amber-500 decoration-2 font-medium'
+                    : isIridescent
+                    ? 'underline decoration-purple-400 decoration-dotted underline-offset-4 hover:text-purple-600 dark:hover:text-purple-300 hover:decoration-solid'
+                    : isCyber
+                    ? 'underline decoration-cyan-400/70 decoration-dotted underline-offset-4 text-cyan-200 hover:text-cyan-100 hover:decoration-solid'
                     : isNocturne
                     ? 'underline decoration-amber-500/50 decoration-dotted underline-offset-4 hover:text-amber-200 hover:decoration-amber-300'
                     : isParchment
@@ -121,13 +129,21 @@ export const PoemReader: React.FC<PoemReaderProps> = ({
               onMouseLeave={() => setHoveredLine(null)}
               className={`group relative flex items-baseline transition-all duration-200 rounded-md px-2 py-0.5 -mx-2 ${
                 isActiveRecitation
-                  ? isNocturne
+                  ? isIridescent
+                    ? 'bg-gradient-to-r from-pink-500/20 via-purple-500/20 to-cyan-500/20 text-purple-950 dark:text-purple-100 ring-2 ring-purple-400 shadow-sm shadow-purple-500/30'
+                    : isCyber
+                    ? 'bg-cyan-950/60 text-cyan-200 ring-1 ring-cyan-400 shadow-sm shadow-cyan-500/40'
+                    : isNocturne
                     ? 'bg-amber-950/40 text-amber-100 ring-1 ring-amber-500/40'
                     : isParchment
                     ? 'bg-amber-200/50 text-amber-950 ring-1 ring-amber-600/30'
                     : 'bg-zinc-100 text-zinc-950 ring-1 ring-zinc-300'
                   : hoveredLine === line.lineNum
-                  ? isNocturne
+                  ? isIridescent
+                    ? 'bg-purple-50/70 dark:bg-purple-950/30'
+                    : isCyber
+                    ? 'bg-cyan-950/30'
+                    : isNocturne
                     ? 'bg-white/[0.03]'
                     : isParchment
                     ? 'bg-stone-200/40'
@@ -140,11 +156,17 @@ export const PoemReader: React.FC<PoemReaderProps> = ({
                 <div
                   className={`w-8 sm:w-12 select-none text-right pr-3 sm:pr-4 text-xs tracking-wider transition-opacity duration-150 shrink-0 font-sans-ui ${
                     isAcademicFifth
-                      ? isNocturne
+                      ? isIridescent
+                        ? 'text-purple-600 dark:text-purple-400 font-bold'
+                        : isCyber
+                        ? 'text-cyan-400 font-bold'
+                        : isNocturne
                         ? 'text-amber-400/80 font-semibold'
                         : isParchment
                         ? 'text-stone-700 font-semibold'
                         : 'text-zinc-800 font-semibold'
+                      : isIridescent
+                      ? 'opacity-40 group-hover:opacity-80 text-purple-400'
                       : 'opacity-20 group-hover:opacity-60 text-zinc-500'
                   }`}
                 >
@@ -155,11 +177,13 @@ export const PoemReader: React.FC<PoemReaderProps> = ({
               {/* Line Verse Text */}
               <div
                 className={`flex-1 tracking-normal transition-colors ${
-                  isNocturne
+                  isCyber
+                    ? 'text-zinc-100'
+                    : isNocturne
                     ? 'text-zinc-200'
                     : isParchment
                     ? 'text-stone-900'
-                    : 'text-zinc-900'
+                    : 'text-zinc-900 dark:text-zinc-100'
                 }`}
               >
                 {renderLineContent(line.text, line.lineNum, line.annotations)}
